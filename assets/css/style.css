@@ -1,0 +1,78 @@
+﻿*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+background:#0b0b14;
+color:#fff;
+font-family:Inter,Segoe UI,sans-serif;
+display:flex;
+height:100vh;
+overflow:hidden;
+}
+
+.ui{
+width:320px;
+padding:20px;
+background:rgba(18,18,28,.8);
+border-right:1px solid rgba(255,255,255,.1);
+}
+
+.ui label{display:block;margin:14px 0 6px;opacity:.75}
+.ui input,.ui select,.ui button{
+width:100%;
+padding:8px;
+background:#141422;
+border:none;
+border-radius:6px;
+color:white;
+}
+
+.preview{
+flex:1;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.border{
+--c1:#ffb3c6;
+--c2:#ff8fab;
+--c3:#bde0fe;
+--c4:#a2d2ff;
+--speed:10s;
+--border:8px;
+--angle:0deg;
+
+position:relative;
+}
+
+.border::before{
+content:'';
+position:absolute;
+inset:0;
+padding:var(--border);
+background:conic-gradient(
+from var(--angle),
+var(--c1),
+var(--c2),
+var(--c3),
+var(--c4),
+var(--c1)
+);
+-webkit-mask:
+linear-gradient(#000 0 0) content-box,
+linear-gradient(#000 0 0);
+-webkit-mask-composite:xor;
+mask-composite:exclude;
+animation:spin var(--speed) linear infinite;
+filter:
+drop-shadow(0 0 22px var(--c3))
+drop-shadow(0 0 40px var(--c3));
+}
+
+@keyframes spin{to{--angle:360deg}}
+
+.bar{width:100%;height:14px}
+.rectangle{width:640px;height:360px}
+.square{width:420px;height:420px}
+
+.overlay-only .ui{display:none}
