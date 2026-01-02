@@ -1,8 +1,6 @@
 ﻿# ============================================
-# PATCH 1 — FIX CSS (REMOVE SPIN BUGADO)
+# OVERWRITE style.css — ANIMAÇÃO FUNCIONAL
 # ============================================
-
-Write-Host "Aplicando patch CSS (removendo animation spin)..." -ForegroundColor Cyan
 
 @"
 *{margin:0;padding:0;box-sizing:border-box}
@@ -19,7 +17,7 @@ overflow:hidden;
 .ui{
 width:320px;
 padding:20px;
-background:rgba(18,18,28,.8);
+background:rgba(18,18,28,.85);
 border-right:1px solid rgba(255,255,255,.1);
 }
 
@@ -40,23 +38,71 @@ justify-content:center;
 align-items:center;
 }
 
+/* ======================
+   BORDER CORE
+====================== */
+
 .border{
 --c1:#ffb3c6;
 --c2:#ff8fab;
 --c3:#bde0fe;
 --c4:#a2d2ff;
+
 --border:8px;
 --angle:0deg;
+--offset:0%;
 
 position:relative;
 }
 
-.border::before{
+/* ===== BARRA ===== */
+.border.bar{
+width:100%;
+height:14px;
+}
+
+.border.bar::before{
 content:'';
 position:absolute;
 inset:0;
 padding:var(--border);
-background:conic-gradient(
+
+background:
+linear-gradient(
+90deg,
+var(--c1),
+var(--c2),
+var(--c3),
+var(--c4),
+var(--c1)
+);
+background-size:300% 100%;
+background-position:var(--offset) 0%;
+
+-webkit-mask:
+linear-gradient(#000 0 0) content-box,
+linear-gradient(#000 0 0);
+-webkit-mask-composite:xor;
+mask-composite:exclude;
+
+filter:
+drop-shadow(0 0 22px var(--c3))
+drop-shadow(0 0 40px var(--c3));
+}
+
+/* ===== SHAPES ===== */
+.border.rectangle{width:640px;height:360px}
+.border.square{width:420px;height:420px}
+
+.border.rectangle::before,
+.border.square::before{
+content:'';
+position:absolute;
+inset:0;
+padding:var(--border);
+
+background:
+conic-gradient(
 from var(--angle),
 var(--c1),
 var(--c2),
@@ -64,21 +110,19 @@ var(--c3),
 var(--c4),
 var(--c1)
 );
+
 -webkit-mask:
 linear-gradient(#000 0 0) content-box,
 linear-gradient(#000 0 0);
 -webkit-mask-composite:xor;
 mask-composite:exclude;
+
 filter:
 drop-shadow(0 0 22px var(--c3))
 drop-shadow(0 0 40px var(--c3));
 }
 
-.bar{width:100%;height:14px}
-.rectangle{width:640px;height:360px}
-.square{width:420px;height:420px}
-
 .overlay-only .ui{display:none}
 "@ | Out-File -Encoding utf8 "AGBG-PRO/assets/css/style.css"
 
-Write-Host "✔ CSS corrigido" -ForegroundColor Green
+Write-Host "✔ style.css sobrescrito (ok)" -ForegroundColor Green
